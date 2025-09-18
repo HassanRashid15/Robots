@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-orbitron: var(--font-orbitron);
+  --font-robot-reavers: var(--font-robot-reavers);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+
+}
+
+/* Robot Reavers font fallback */
+@font-face {
+  font-family: 'RobotReavers';
+  src: url('./fonts/RobotReavers.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Custom gradient animation */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0px 0px;
+  }
+  50% {
+    background-position: 20px 20px;
+  }
+  100% {
+    background-position: 40px 40px;
+  }
+}
+
+.animate-gradient-shift {
+  animation: gradient-shift 4s linear infinite;
+}
+
+    /* Custom responsive breakpoint at 1075px */
+    @media (min-width: 1076px) {
+      .desktop-nav,
+      .desktop-cta {
+        display: block !important;
+      }
+      .mobile-menu-btn,
+      .mobile-menu {
+        display: none !important;
+      }
+    }
+
+    @media (max-width: 1075px) {
+      .desktop-nav,
+      .desktop-cta {
+        display: none !important;
+      }
+      .mobile-menu-btn {
+        display: block !important;
+      }
+    }
+
+/* Angular Button Styles */
+.angular-button {
+  clip-path: polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%);
+  position: relative;
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+}
+
+.angular-button:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(135deg, #dc2626, #b91c1c);
+}
