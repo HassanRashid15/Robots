@@ -1,7 +1,6 @@
 import Link from 'next/link';
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-gray-900 text-white relative">
@@ -114,7 +113,7 @@ const Footer = () => {
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-center md:text-left">
               <p className="text-white text-lg font-mono">
-                IF YOU DIDN'T FIND THE PRODUCTS YOU ARE{' '}
+                IF YOU DIDN&apos;T FIND THE PRODUCTS YOU ARE{' '}
                 <span className="text-orange-500">INTERESTED</span> IN OR HAVE{' '}
                 <span className="text-orange-500">QUESTIONS?</span>
               </p>

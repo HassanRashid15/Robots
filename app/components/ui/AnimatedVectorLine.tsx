@@ -41,7 +41,6 @@ const AnimatedVectorLine = ({
       if (inView) {
         // Calculate scroll progress within the section
         const scrollStart = sectionTop;
-        const scrollEnd = sectionTop + sectionHeight;
         const currentScroll = window.scrollY;
         
         // Progress from 0 to 1 as we scroll through the section

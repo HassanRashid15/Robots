@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -42,6 +41,7 @@ const Navbar = () => {
       {/* Neon glow effect when scrolled */}
       {isScrolled && (
         <>
+        
           {/* Neon glow background */}
           <div className="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-cyan-500/10 to-orange-500/10 animate-pulse"></div>
           
