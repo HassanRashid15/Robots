@@ -32,10 +32,10 @@ export default function Home() {
                 // Responsive number of dots based on screen size
                 const getNumStars = () => {
                   const width = window.innerWidth;
-                  if (width < 768) return 20; // Mobile: 20 dots
-                  if (width < 1024) return 35; // Tablet: 35 dots
-                  if (width < 1280) return 45; // Small desktop: 45 dots
-                  return 60; // Large desktop: 60 dots
+                  if (width < 768) return 40; // Mobile: 40 dots (doubled)
+                  if (width < 1024) return 70; // Tablet: 70 dots (doubled)
+                  if (width < 1280) return 90; // Small desktop: 90 dots (doubled)
+                  return 120; // Large desktop: 120 dots (doubled)
                 };
                 
                 let numStars = getNumStars();
@@ -45,11 +45,13 @@ export default function Home() {
                   stars.length = 0; // Clear existing stars
                   numStars = getNumStars(); // Get current responsive count
                   
+                  const rect = canvas.getBoundingClientRect();
+                  
                   for (let i = 0; i < numStars; i++) {
                     const baseRadius = Math.random() * 1 + 1;
                     stars.push({
-                      x: Math.random() * canvas.width,
-                      y: Math.random() * canvas.height,
+                      x: Math.random() * rect.width,
+                      y: Math.random() * rect.height,
                       radius: baseRadius,
                       vx: Math.floor(Math.random() * 50) - 25,
                       vy: Math.floor(Math.random() * 50) - 25,
@@ -59,10 +61,26 @@ export default function Home() {
                   }
                 };
                 
-                // Responsive canvas sizing
+                
+                // Responsive canvas sizing with proper DPI handling
                 const resizeCanvas = () => {
-                  canvas.width = window.innerWidth;
-                  canvas.height = window.innerHeight;
+                  const dpr = window.devicePixelRatio || 1;
+                  const rect = canvas.getBoundingClientRect();
+                  
+                  // Set the actual size in memory (scaled to account for extra pixel density)
+                  canvas.width = rect.width * dpr;
+                  canvas.height = rect.height * dpr;
+                  
+                  // Scale the drawing context so everything will work at the higher ratio
+                  const ctx = canvas.getContext('2d');
+                  if (ctx) {
+                    ctx.scale(dpr, dpr);
+                  }
+                  
+                  // Set the display size (css pixels)
+                  canvas.style.width = rect.width + 'px';
+                  canvas.style.height = rect.height + 'px';
+                  
                   createStars(); // Regenerate stars for new screen size
                 };
                 
@@ -78,10 +96,12 @@ export default function Home() {
                   return Math.sqrt(xs * xs + ys * ys);
                 }
                 
+                
                 function draw() {
                   if (!ctx || !canvas) return;
                   
-                  ctx.clearRect(0, 0, canvas.width, canvas.height);
+                  const rect = canvas.getBoundingClientRect();
+                  ctx.clearRect(0, 0, rect.width, rect.height);
                   ctx.globalCompositeOperation = "lighter";
                   
                   // Draw stars with pulsing effect
@@ -135,13 +155,16 @@ export default function Home() {
                 function update() {
                   if (!canvas) return;
                   
+                  const rect = canvas.getBoundingClientRect();
+                  
+                  // Update stars
                   for (let i = 0; i < stars.length; i++) {
                     const s = stars[i];
                     s.x += s.vx / FPS;
                     s.y += s.vy / FPS;
                     
-                    if (s.x < 0 || s.x > canvas.width) s.vx = -s.vx;
-                    if (s.y < 0 || s.y > canvas.height) s.vy = -s.vy;
+                    if (s.x < 0 || s.x > rect.width) s.vx = -s.vx;
+                    if (s.y < 0 || s.y > rect.height) s.vy = -s.vy;
                   }
                 }
                 
@@ -169,6 +192,7 @@ export default function Home() {
             }
           }}
           className="w-full h-full opacity-40"
+          style={{ imageRendering: 'auto' }}
         />
       </div>
       
@@ -371,7 +395,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-white relative z-10">
+      {/* <section className="py-20 bg-white relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -463,11 +487,11 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
 
       {/* Features Section - Dark Theme */}
-      <section className="py-20 bg-gradient-to-br from-gray-900 via-black to-gray-800 relative z-10">
+      <section className="py-20 bg-transparent relative z-10">
         {/* Background Effects */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,140,0,0.05),transparent_50%)]"></div>
         
@@ -559,7 +583,7 @@ export default function Home() {
       </section>
 
       {/* Why Section */}
-      <section className="py-20 bg-gradient-to-br from-gray-900 via-black to-gray-800 relative z-10">
+      <section className="py-20 bg-transparent relative z-10">
         {/* Background Curved Lines */}
         <div className="absolute inset-0 overflow-hidden">
           <svg className="absolute top-0 left-0 w-full h-full opacity-20" viewBox="0 0 1200 600" preserveAspectRatio="none">
@@ -615,7 +639,7 @@ export default function Home() {
       </section>
 
       {/* Applications Section */}
-      <section className="py-20 bg-gradient-to-br from-gray-900 via-black to-gray-800 relative z-10">
+      <section className="py-20 bg-transparent relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-16">
